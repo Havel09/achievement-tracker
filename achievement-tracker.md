@@ -1,5 +1,9 @@
 # Nom du projet : achievement-tracker
 
+## Description
+le but du projet est de faire un tracker pour les succès steam qui récupère les succès d'une personne afin de les afficher sous forme de checklist en ayant les infos du succès aussi, 
+on aurait donc notre bibliothèque récupéré et affiché pour nous aider à la completion d'un jeu.
+
 ## Problème résolu avec ce projet : 
 Un site web permettant de naviguer dans ses succès steam facilement afin de mieux suivre sa progression.
 
@@ -8,10 +12,6 @@ Un site web permettant de naviguer dans ses succès steam facilement afin de mie
 * Voir la progression globale des succès
 * Voir les succès d'un jeu et leur description
 * Avoir un lien directement sur le wiki du jeu sélectionné
-
-## Description
-le but du projet est de faire un tracker pour les succès steam qui récupère les succès d'une personne afin de les afficher sous forme de checklist en ayant les infos du succès aussi, 
-on aurait donc notre bibliothèque récupéré et affiché pour nous aider à la completion d'un jeu.
 
 ## Arborescence
     achievement-tracker/
