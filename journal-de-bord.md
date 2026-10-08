@@ -4,9 +4,6 @@
 
 ### Création du dépôt GitHub
 - Création du dépôt **`Havel09/achievement-tracker`** sur GitHub.
-- Initialisation du dépôt Git local (`main`) et configuration du remote `origin` en SSH.
-- Ajout de la clé SSH publique au compte GitHub pour permettre l'authentification.
-- Premier commit (`39e7d29`) puis première publication de la branche `main` sur GitHub.
 
 ### Documentation du projet
 - Rédaction du document **`achievement-tracker.md`** :
