@@ -15,37 +15,53 @@ Un site web permettant de naviguer dans ses succès steam facilement afin de mie
 
 ## Arborescence
     achievement-tracker/
-    ├── composer.json
-    ├── .gitignore                    # vendor/, cache/, config/secrets.php
-    │
-    ├── public/                       # Seul dossier exposé par le serveur web
-    │   ├── index.php                 # Point d'entrée Slim (crée l'app, charge les routes)
-    │   ├── .htaccess                 # Fichier existant -> servi, sinon -> index.php
-    │   ├── index.html                # Saisie du SteamID / pseudo
-    │   ├── library.html              # Bibliothèque de jeux
-    │   ├── game.html                 # Checklist des succès
+    ├── public/
+    │   ├── index.php 
+    │   ├── .htaccess
     │   └── assets/
     │       ├── css/ (style.css, library.css, game.css)
-    │       └── js/  (api.js, storage.js, library.js, game.js, utils.js)
-    │
-    ├── config/
-    │   ├── settings.php              # Chemins, durée du cache
-    │   └── secrets.php               # Clé API Steam (non versionné)
-    │
-    ├── routes/
-    │   └── api.php                   # Toutes les routes /api/...
+    │       └── js/  (filters.js, progress.js, storage.js)
     │
     ├── src/
-    │   ├── Controllers/              # C : reçoivent la requête, renvoient du JSON
-    │   │   ├── UserController.php
-    │   │   ├── GameController.php
-    │   │   └── AchievementController.php
-    │   ├── Models/                   # M : représentent les données
+    │   ├── Config/
+    │   │   └── env.php
+    │   │
+    │   ├── Models/
+    │   │   ├── Player.php
     │   │   ├── Game.php
     │   │   └── Achievement.php
-    │   └── Services/                 # Logique externe (appels Steam, cache)
-    │       ├── SteamService.php
-    │       └── CacheService.php
+    │   │
+    │   ├── Services/
+    │   │   ├── SteamService.php
+    │   │   └── CacheService.php
+    │   │
+    │   ├── Controllers/
+    │   │   ├── HomeController.php
+    │   │   ├── LibraryController.php
+    │   │   └── GameController.php
+    │   │
+    │   └── Views/
+    │       ├── layouts/
+    │       │   └── main.php
+    │       ├── home.php
+    │       ├── library.php
+    │       ├── game.php
+    │       └── partials/
+    │           ├── game_card.php
+    │           ├── achievement_item.php
+    │           └── progress_bar.php
     │
-    ├── cache/                        # Réponses Steam en JSON
-    └── vendor/                       # Généré par Composer
+    ├── routes/
+    │   └── web.php
+    │
+    ├── config/
+    │   ├── env/
+    │   │   └── .env.example
+    │   └── vhost/
+    │       └── achievement-tracker.local.conf
+    │
+    ├── cache/
+    ├── .env
+    ├── .gitignore
+    ├── composer.json
+    └── README.md
