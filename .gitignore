@@ -1,0 +1,18 @@
+# Dependances
+/vendor/
+
+# Configuration locale et secrets
+.env
+.env.*
+!.env.example
+
+# Logs et fichiers temporaires
+*.log
+*.cache
+/tmp/
+
+# Outils et systeme
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
