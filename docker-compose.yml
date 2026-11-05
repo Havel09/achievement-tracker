@@ -1,0 +1,8 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    command: sh -c "composer install --no-interaction && apache2-foreground"
