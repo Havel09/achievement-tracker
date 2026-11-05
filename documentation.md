@@ -1,4 +1,3 @@
-```markdown
 # Nom du projet : achievement-tracker
 
 ## Description
