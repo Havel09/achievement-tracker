@@ -13,11 +13,7 @@ use Slim\Views\PhpRenderer;
 // Page d'accueil : saisie du pseudo + liste des jeux de la bibliothèque.
 class LibraryController
 {
-    public function __construct(
-        private SteamService $steam,
-        private PhpRenderer $view
-    ) {
-    }
+    public function __construct(private SteamService $steam, private PhpRenderer $view) { }
 
     public function index(Request $request, Response $response): Response
     {

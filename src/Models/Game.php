@@ -19,7 +19,7 @@ class Game
     ) {
     }
 
-    // Lien vers le wiki du jeu (recherche faite avec le nom du jeu).
+    // Lien vers le wiki du jeu.
     public function getWikiUrl(): string
     {
         return 'https://www.google.com/search?q=' . urlencode($this->name . ' wiki');

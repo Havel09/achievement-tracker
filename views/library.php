@@ -1,5 +1,5 @@
 <?php
-// Petite fonction pour afficher du texte sans risque (protège contre le HTML injecté)
+// Petite fonction pour afficher du texte sans risque
 $e = fn(string $texte): string => htmlspecialchars($texte, ENT_QUOTES, 'UTF-8');
 ?>
 

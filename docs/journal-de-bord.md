@@ -39,3 +39,12 @@
 ### Création du layout
 - Ajout de la recherche graphique de joueur et affichage de leur catalogue.
 - Suppression de la route de test `/test`.
+
+## 12 novembre
+
+### Création de GameController
+- Création de GameController pour récupérer les succès du joueur.
+  - Récupération de l'avancement du joueur.
+
+### Création de la vue pour les succès
+- Création de la vue des succès du joueur.
