@@ -6,7 +6,7 @@ $e = fn(string $texte): string => htmlspecialchars($texte, ENT_QUOTES, 'UTF-8');
 <h1>Ma bibliothèque Steam</h1>
 
 <form method="get" action="/">
-    <label for="pseudo">Pseudo Steam ou SteamID</label>
+    <label for="pseudo">Entrez votre SteamID pour voir votre bibliothèque</label>
     <input type="text" id="pseudo" name="pseudo" value="<?= $e($pseudo) ?>" required>
     <button type="submit">Afficher ma bibliothèque</button>
 </form>

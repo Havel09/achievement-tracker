@@ -48,3 +48,14 @@
 
 ### Création de la vue pour les succès
 - Création de la vue des succès du joueur.
+
+## 19 novembre
+
+### Ajout du css des pages
+- Création du style css du site.
+
+### Création de la page 404 custom (optionnel)
+- Création d'une page `404.php` pour rester dans le style du site.
+
+### Ajout d'une barre de recherche pour les différents succès d'un jeu
+- Création de la barre de recherche dans la navigation des succès.

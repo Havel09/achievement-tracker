@@ -30,4 +30,4 @@ Un site web permettant de naviguer dans ses succès steam facilement afin de mie
     │   │   └── Achievement.php
     │   └── Services/
     │       └── SteamService.php        # tous les appels à l'API Steam
-    └── views/ (layout.php, library.php, game.php)
+    └── views/ (layout.php, library.php, game.php, 404.php)

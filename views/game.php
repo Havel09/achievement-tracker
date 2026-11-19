@@ -37,6 +37,8 @@
         </section>
 
         <ul class="achievements">
+            <input type="search" id="search" placeholder="Rechercher un succès..." aria-label="Rechercher un succès">
+            <p id="no-result" hidden>Aucun succès trouvé.</p>
             <?php foreach ($game->achievements as $achievement): ?>
                 <li class="achievement <?= $achievement->unlocked ? 'unlocked' : 'locked' ?>">
                     <input type="checkbox" disabled <?= $achievement->unlocked ? 'checked' : '' ?>>

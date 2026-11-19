@@ -34,12 +34,7 @@ class Game
             return 0.0;
         }
 
-        $unlocked = 0;
-        foreach ($this->achievements as $achievement) {
-            if ($achievement->unlocked) {
-                $unlocked++;
-            }
-        }
+        $unlocked = count(array_filter($this->achievements, fn($a) => $a->unlocked));
 
         return round($unlocked / $total * 100, 1);
     }

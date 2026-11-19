@@ -20,19 +20,19 @@ class SteamService
     {
         $name = trim($name);
 
-        // Si la personne a déjà donné un SteamID (17 chiffres), pas besoin d'appeler Steam.
-        if (preg_match('/^\d{17}$/', $name) === 1) {
+        // Déjà un SteamID (17 chiffres) : pas besoin d'appeler Steam
+        if (preg_match('/^\d{17}$/', $name)) {
             return $name;
         }
 
         $data = $this->call('ISteamUser/ResolveVanityURL/v0001/', ['vanityurl' => $name]);
 
-        // success = 1 : profil trouvé, success = 42 : aucun profil avec ce pseudo.
+        // success = 1 : profil trouvé, 42 : aucun profil avec ce pseudo
         if (($data['response']['success'] ?? 0) !== 1) {
             throw new RuntimeException("Aucun profil Steam trouvé pour « $name ».");
         }
 
-        return (string) $data['response']['steamid'];
+        return $data['response']['steamid'];
     }
 
     // récupère la bibliothèque de jeux d'un joueur.
@@ -41,10 +41,11 @@ class SteamService
     {
         $data = $this->call('IPlayerService/GetOwnedGames/v0001/', [
             'steamid' => $steamId,
-            'include_appinfo' => 1,
+            'include_appinfo' => 1, // nom et icône de chaque jeu
+            'include_played_free_games' => 1, // jeux gratuits compris
         ]);
 
-        // Si le profil est privé, Steam renvoie une réponse vide.
+        // Profil privé : Steam renvoie une réponse vide
         if (!isset($data['response']['games'])) {
             throw new RuntimeException('Bibliothèque introuvable : le profil est peut-être privé.');
         }
@@ -52,17 +53,11 @@ class SteamService
         $games = [];
 
         foreach ($data['response']['games'] as $g) {
-            $appId = (int) $g['appid'];
-            $hash = $g['img_icon_url'] ?? '';
+            $iconUrl = empty($g['img_icon_url'])
+                ? ''
+                : "https://media.steampowered.com/steamcommunity/public/images/apps/{$g['appid']}/{$g['img_icon_url']}.jpg";
 
-            $iconUrl = $hash !== '' ? "https://media.steampowered.com/steamcommunity/public/images/apps/$appId/$hash.jpg" : '';
-
-            $games[] = new Game(
-                $appId,
-                (string) ($g['name'] ?? 'Jeu inconnu'),
-                $iconUrl,
-                (int) ($g['playtime_forever'] ?? 0)
-            );
+            $games[] = new Game($g['appid'], $g['name'] ?? 'Jeu inconnu', $iconUrl, $g['playtime_forever'] ?? 0);
         }
 
         return $games;
@@ -72,16 +67,17 @@ class SteamService
     /** @return Achievement[] */
     public function getAchievements(string $steamId, int $appId): array
     {
-        // Ce que le joueur a débloqué.
-        $player = $this->call('ISteamUserStats/GetPlayerAchievements/v0001/', [
+        // 1. Ce que le joueur a débloqué
+        $data = $this->call('ISteamUserStats/GetPlayerAchievements/v0001/', [
             'steamid' => $steamId,
             'appid' => $appId,
         ]);
+        $stats = $data['playerstats'] ?? [];
 
-        if (!($player['playerstats']['success'] ?? false)) {
-            $error = $player['playerstats']['error'] ?? 'Réponse invalide de Steam.';
+        if (!($stats['success'] ?? false)) {
+            $error = $stats['error'] ?? 'Réponse invalide de Steam.';
 
-            // Un jeu sans succès, on renvoie une liste vide.
+            // Un jeu sans succès n'est pas une erreur : liste vide
             if ($error === 'Requested app has no stats') {
                 return [];
             }
@@ -89,29 +85,21 @@ class SteamService
             throw new RuntimeException($error);
         }
 
-        $unlocked = [];
+        // Tableau [nom du succès => 1 si débloqué, 0 sinon]
+        $unlocked = array_column($stats['achievements'] ?? [], 'achieved', 'apiname');
 
-        foreach ($player['playerstats']['achievements'] ?? [] as $a) {
-            $unlocked[$a['apiname']] = (bool) $a['achieved'];
-        }
-
-        // La liste complète des succès du jeu : nom, description, icônes.
-        $schema = $this->call('ISteamUserStats/GetSchemaForGame/v2/', [
-            'appid' => $appId,
-            'l' => 'french',
-        ]);
-
-        $list = $schema['game']['availableGameStats']['achievements'] ?? [];
+        // 2. La liste complète des succès du jeu (nom, description, icônes), en français
+        $schema = $this->call('ISteamUserStats/GetSchemaForGame/v2/', ['appid' => $appId, 'l' => 'french']);
         $achievements = [];
 
-        foreach ($list as $s) {
-            $isUnlocked = $unlocked[$s['name']] ?? false;
+        foreach ($schema['game']['availableGameStats']['achievements'] ?? [] as $s) {
+            $isUnlocked = (bool) ($unlocked[$s['name']] ?? false);
 
             $achievements[] = new Achievement(
-                (string) $s['name'],
-                (string) ($s['displayName'] ?? $s['name']),
-                (string) ($s['description'] ?? ''),
-                (string) ($isUnlocked ? ($s['icon'] ?? '') : ($s['icongray'] ?? '')),
+                $s['name'],
+                $s['displayName'] ?? $s['name'],
+                $s['description'] ?? '',
+                $isUnlocked ? ($s['icon'] ?? '') : ($s['icongray'] ?? ''), // icône grise si pas débloqué
                 (bool) ($s['hidden'] ?? false),
                 $isUnlocked
             );
