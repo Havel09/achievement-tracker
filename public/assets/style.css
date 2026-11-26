@@ -1,4 +1,4 @@
-/* Couleurs du site : on les change ici pour tout modifier d'un coup */
+/* ---------- Couleurs du site : on les change ici pour tout modifier d'un coup ---------- */
 :root {
     --fond: #1b2838;
     --carte: #16202d;
@@ -8,6 +8,7 @@
     --erreur: #c0392b;
 }
 
+/* ---------- Base de la page ---------- */
 body {
     margin: 0;
     background: var(--fond);
@@ -25,11 +26,17 @@ a:hover {
     text-decoration: underline;
 }
 
-/* En-tête et contenu */
+/* ---------- En-tête et contenu ---------- */
 header {
     background: #171a21;
     padding: 15px 20px;
     font-weight: bold;
+}
+
+/* Le deuxième lien de l'en-tête (« Ma bibliothèque ») */
+header a + a {
+    margin-left: 20px;
+    font-weight: normal;
 }
 
 main {
@@ -38,7 +45,7 @@ main {
     padding: 20px;
 }
 
-/* Formulaire du pseudo */
+/* ---------- Formulaire du pseudo ---------- */
 form {
     display: flex;
     flex-wrap: wrap;
@@ -73,14 +80,14 @@ form button:hover {
     opacity: 0.85;
 }
 
-/* Message d'erreur */
+/* ---------- Message d'erreur ---------- */
 .error {
     padding: 10px 15px;
     border-left: 4px solid var(--erreur);
     background: var(--carte);
 }
 
-/* Listes (jeux et succès) */
+/* ---------- Listes (jeux et succès) ---------- */
 ul.games,
 ul.achievements {
     margin: 0;
@@ -88,7 +95,7 @@ ul.achievements {
     list-style: none;
 }
 
-/* Page bibliothèque */
+/* ---------- Page bibliothèque ---------- */
 .games li {
     display: flex;
     justify-content: space-between;
@@ -105,7 +112,7 @@ ul.achievements {
     gap: 10px;
 }
 
-/* Page d'un jeu */
+/* ---------- Page d'un jeu ---------- */
 .game-header {
     margin-bottom: 20px;
 }
@@ -118,6 +125,18 @@ ul.achievements {
     width: 100%;
     height: 20px;
     accent-color: var(--vert);
+}
+
+/* Barre de recherche des succès */
+#search {
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #3a4a5c;
+    border-radius: 4px;
+    background: var(--carte);
+    color: var(--texte);
 }
 
 .achievement {
@@ -136,25 +155,17 @@ ul.achievements {
     font-size: 0.9em;
 }
 
+/* Succès débloqué : trait vert à gauche */
 .achievement.unlocked {
     border-left-color: var(--vert);
 }
 
+/* Succès pas encore débloqué : un peu estompé */
 .achievement.locked {
     opacity: 0.6;
 }
 
-#search {
-    box-sizing: border-box;
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #3a4a5c;
-    border-radius: 4px;
-    background: var(--carte);
-    color: var(--texte);
-}
-
+/* ---------- Page 404 ---------- */
 .not-found {
     padding: 40px 0;
     text-align: center;
