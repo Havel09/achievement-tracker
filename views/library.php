@@ -9,7 +9,7 @@
 
 <?php /* Le formulaire renvoie vers la même page, avec le pseudo dans l'adresse (/?pseudo=...) */ ?>
 <form method="get" action="/">
-    <label for="pseudo">URL personnalisée Steam, SteamID ou lien du profil</label>
+    <label for="pseudo">Entrez votre SteamID ou le lien de votre profil</label>
     <input type="text" id="pseudo" name="pseudo" value="<?= echapper($pseudo) ?>" required>
     <button type="submit">Afficher ma bibliothèque</button>
 </form>
